@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* MONO — Lab Noir, inverted for daylight gallery */
+  --color-paper: #fafaf7;
+  --color-paper-2: #f1f0ea;
+  --color-ink: #111111;
+  --color-stone: #8a8a83;
+  --color-stone-deep: #62625b;
+  --color-line: rgba(17, 17, 17, 0.14);
+  --color-line-soft: rgba(17, 17, 17, 0.08);
+
+  --font-display: var(--font-instrument), ui-serif, Georgia, serif;
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-space-mono), ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+}
+
+/* ——— utility voice: every metadata is small uppercase mono ——— */
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem; /* 11px */
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.mono-label-xs {
+  font-family: var(--font-mono);
+  font-size: 0.625rem; /* 10px */
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* unified photo treatment: slightly desaturated, like prints in one series */
+.img-tone {
+  filter: saturate(0.78) contrast(1.04);
+}
+
+/* exposed 12-column grid */
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(12px, 1.6vw, 28px);
+}
+
+.page-margin {
+  padding-left: clamp(20px, 4vw, 64px);
+  padding-right: clamp(20px, 4vw, 64px);
+}
+
+.hairline-t {
+  border-top: 1px solid var(--color-line);
+}
+
+.hairline-b {
+  border-bottom: 1px solid var(--color-line);
+}
+
+/* underline used by text links: 1px, offset, animates via color only */
+.link-quiet {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--color-line);
+  transition: text-decoration-color 0.25s ease, color 0.25s ease;
+}
+
+.link-quiet:hover {
+  text-decoration-color: currentColor;
+}
+
+/* project card image zoom — the one sanctioned scale interaction */
+.card-media {
+  overflow: hidden;
+}
+
+.card-media img {
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) {
+  .card-frame:hover .card-media img,
+  .card-frame:focus-within .card-media img {
+    transform: scale(1.03);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-media img {
+    transition: none;
+  }
+}
+
+/* skip link */
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 200;
+  transform: translateY(-300%);
+  background: var(--color-ink);
+  color: var(--color-paper);
+  padding: 10px 16px;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
