@@ -54,7 +54,7 @@ export default function StylizedMap({ caption }: { caption: string }) {
           <text
             x="262"
             y="116"
-            fontFamily="var(--font-space-mono), monospace"
+            fontFamily="var(--font-mono), monospace"
             fontSize="11"
             letterSpacing="0.14em"
             fill="#111111"
@@ -72,7 +72,7 @@ export default function StylizedMap({ caption }: { caption: string }) {
         <text
           x="112"
           y="380"
-          fontFamily="var(--font-space-mono), monospace"
+          fontFamily="var(--font-mono), monospace"
           fontSize="10"
           letterSpacing="0.12em"
           fill="#62625b"

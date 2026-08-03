@@ -63,7 +63,7 @@ export default function ProjectsIndex({ locale, dict }: Props) {
             type="button"
             onClick={() => setFilter(f.key)}
             aria-pressed={filter === f.key}
-            className={`mono-label transition-colors ${
+            className={`hit mono-label transition-colors ${
               filter === f.key ? "text-ink underline underline-offset-4" : "text-stone-deep hover:text-ink"
             }`}
           >
@@ -71,6 +71,15 @@ export default function ProjectsIndex({ locale, dict }: Props) {
           </button>
         ))}
       </div>
+
+      {/* Der Filter ändert die sichtbare Liste, ohne die Seite zu wechseln — wer nicht
+          hinsieht, bekommt das sonst nicht mit. `polite`, damit es die laufende Vorlesung
+          nicht unterbricht. */}
+      <p aria-live="polite" className="sr-only">
+        {visible.length === 1
+          ? dict.projects.resultCountOne
+          : dict.projects.resultCount.replace("{n}", String(visible.length))}
+      </p>
 
       {visible.length === 0 ? (
         <p className="mono-label mt-16 text-stone-deep">{dict.projects.empty}</p>
@@ -100,7 +109,7 @@ export default function ProjectsIndex({ locale, dict }: Props) {
                         <span className="mono-label-xs text-stone" aria-hidden="true">
                           {projectIndex(p.slug)}
                         </span>
-                        <span className="font-display text-2xl tracking-tight transition-colors group-hover:text-stone-deep md:text-3xl">
+                        <span className="font-display text-2xl transition-colors group-hover:text-stone-deep md:text-3xl">
                           {p.name}
                         </span>
                       </span>

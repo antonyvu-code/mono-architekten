@@ -24,7 +24,7 @@ export default async function ProjectsPage({
   return (
     <div className="page-margin pt-36 md:pt-44">
       <p className="mono-label mb-5 text-stone-deep">{dict.projects.eyebrow}</p>
-      <h1 className="font-display mb-12 text-[16vw] leading-[0.85] tracking-tight md:text-[9vw]">
+      <h1 className="font-display mb-12 text-[16vw] leading-[0.85] md:text-[9vw]">
         {dict.projects.title}
         <span className="align-top text-[4vw] text-stone md:text-[2vw]"> (07)</span>
       </h1>

@@ -3,6 +3,7 @@ import Reveal from "@/components/reveal/Reveal";
 import Parallax from "@/components/reveal/Parallax";
 import RevealText from "@/components/reveal/RevealText";
 import TransitionLink from "@/components/TransitionLink";
+import SunReadout from "@/components/chrome/SunReadout";
 import { getDictionary, isLocale, localePath, type Locale } from "@/lib/i18n";
 import { featuredProjects, projectIndex } from "@/lib/projects";
 
@@ -18,24 +19,32 @@ export default async function HomePage({
 
   return (
     <>
-      {/* ——— typographic hero ——— */}
-      <section className="page-margin flex min-h-svh flex-col justify-end pb-14 pt-32">
+      {/* ——— die Fassade ———
+          Der Hero ist keine Überschrift auf einer Fläche, sondern eine Fassade im Licht
+          dieses Augenblicks: Streiflicht und Schattenwurf kommen aus dem echten Berliner
+          Sonnenstand (`lib/sun.ts`), nicht aus einem festen Gradienten. Um 9 Uhr streift
+          das Licht aus Osten, um 18 Uhr aus Westen, nachts bleibt die Fassade unbeleuchtet
+          — was ehrlicher ist als ein erfundener Schatten. */}
+      <section className="rake page-margin relative flex min-h-svh flex-col justify-end pb-14 pt-32">
         <p className="mono-label mb-6 text-stone-deep">{t.eyebrow}</p>
         <RevealText
           immediate
           as="h1"
           lines={[t.heroA, t.heroB]}
-          className="font-display tracking-tight"
+          className="font-display facade"
           lineClassNames={[
-            "text-[22vw] leading-[0.82] md:text-[17vw]",
-            "pl-[10vw] text-[13vw] italic leading-[1.05] text-stone md:text-[8.5vw]",
+            "text-[22vw] leading-[0.82] tracking-[0.012em] md:text-[17vw]",
+            "display-emph pl-[10vw] text-[13vw] leading-[1.05] tracking-[0.012em] text-stone md:text-[8.5vw]",
           ]}
         />
-        <div className="hairline-t mt-10 flex flex-wrap items-baseline justify-between gap-4 pt-5">
+        <div className="hairline-t mt-10 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3 pt-5">
           <p className="mono-label-xs max-w-md text-stone-deep">{t.tagline}</p>
-          <p className="mono-label-xs text-stone-deep" aria-hidden="true">
-            {t.scroll} ↓
-          </p>
+          <div className="flex items-baseline gap-6">
+            <SunReadout />
+            <p className="mono-label-xs text-stone-deep" aria-hidden="true">
+              {t.scroll} ↓
+            </p>
+          </div>
         </div>
       </section>
 
@@ -86,7 +95,7 @@ export default async function HomePage({
                   <p className="mono-label-xs mb-4 text-stone-deep">
                     {projectIndex(p.slug)} / {dict.categories[p.category]} — {p.year}
                   </p>
-                  <h3 className="font-display text-4xl leading-none tracking-tight md:text-5xl">
+                  <h3 className="font-display text-4xl leading-none md:text-5xl">
                     <TransitionLink href={href} transitionLabel={p.name.toUpperCase()}>
                       {p.name}
                     </TransitionLink>
@@ -113,7 +122,7 @@ export default async function HomePage({
             transitionLabel={dict.nav.projects.toUpperCase()}
             className="group flex items-baseline justify-between"
           >
-            <span className="font-display text-5xl tracking-tight transition-colors group-hover:text-stone md:text-7xl">
+            <span className="font-display text-5xl transition-colors group-hover:text-stone md:text-7xl">
               {t.allProjects}
             </span>
             <span className="mono-label text-stone-deep">07 →</span>
@@ -129,7 +138,7 @@ export default async function HomePage({
             <RevealText
               as="p"
               lines={[t.statement]}
-              className="font-display text-3xl leading-snug tracking-tight md:text-5xl md:leading-tight"
+              className="font-display text-3xl leading-snug md:text-5xl md:leading-tight"
             />
             <TransitionLink
               href={localePath(locale, "/studio")}

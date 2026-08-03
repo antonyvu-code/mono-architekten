@@ -24,7 +24,7 @@ export default async function StudioPage({
   return (
     <div className="page-margin pt-36 md:pt-44">
       <p className="mono-label mb-5 text-stone-deep">{t.eyebrow}</p>
-      <h1 className="font-display mb-16 text-[16vw] leading-[0.85] tracking-tight md:text-[9vw]">
+      <h1 className="font-display mb-16 text-[16vw] leading-[0.85] md:text-[9vw]">
         {t.title}
       </h1>
 
@@ -34,7 +34,7 @@ export default async function StudioPage({
           <RevealText
             as="p"
             lines={[t.statement]}
-            className="font-display text-3xl leading-snug tracking-tight md:text-5xl md:leading-tight"
+            className="font-display text-3xl leading-snug md:text-5xl md:leading-tight"
           />
         </div>
       </div>
@@ -64,7 +64,7 @@ export default async function StudioPage({
               <span className="mono-label-xs col-span-2 text-stone md:col-span-1" aria-hidden="true">
                 0{i + 1}
               </span>
-              <h3 className="font-display col-span-10 text-3xl tracking-tight md:col-span-4 md:text-4xl">
+              <h3 className="font-display col-span-10 text-3xl md:col-span-4 md:text-4xl">
                 {p.title}
               </h3>
               <p className="col-span-12 col-start-3 mt-3 max-w-lg text-sm leading-relaxed text-stone-deep md:col-span-6 md:col-start-6 md:mt-0">
@@ -83,7 +83,7 @@ export default async function StudioPage({
         <ul className="hairline-t">
           {t.team.map((member) => (
             <li key={member.name} className="hairline-b grid-12 items-baseline py-4">
-              <span className="font-display col-span-12 text-xl tracking-tight md:col-span-5 md:text-2xl">
+              <span className="font-display col-span-12 text-xl md:col-span-5 md:text-2xl">
                 {member.name}
               </span>
               <span className="mono-label-xs col-span-8 text-stone-deep md:col-span-5 md:col-start-6">
@@ -105,7 +105,7 @@ export default async function StudioPage({
         <dl className="grid grid-cols-2 gap-px border border-line bg-line md:grid-cols-4">
           {t.facts.map((f) => (
             <div key={f.label} className="bg-paper p-6 md:p-8">
-              <dd className="font-display text-5xl tracking-tight md:text-6xl">{f.value}</dd>
+              <dd className="font-display text-5xl md:text-6xl">{f.value}</dd>
               <dt className="mono-label-xs mt-3 text-stone-deep">{f.label}</dt>
             </div>
           ))}

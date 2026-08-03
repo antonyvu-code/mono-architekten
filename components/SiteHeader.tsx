@@ -128,7 +128,7 @@ export default function SiteHeader({ locale, nav }: Props) {
                 type="button"
                 onClick={() => router.replace(switchLocalePath(pathname, l))}
                 aria-current={l === locale ? "true" : undefined}
-                className={`uppercase transition-colors ${
+                className={`hit uppercase transition-colors ${
                   l === locale
                     ? "underline underline-offset-4"
                     : open
@@ -148,7 +148,7 @@ export default function SiteHeader({ locale, nav }: Props) {
             aria-expanded={open}
             aria-controls="site-menu"
             aria-label={open ? nav.closeMenu : nav.openMenu}
-            className="mono-label transition-colors hover:text-stone"
+            className="hit mono-label transition-colors hover:text-stone"
           >
             {open ? nav.close : nav.menu}
           </button>
@@ -181,8 +181,8 @@ export default function SiteHeader({ locale, nav }: Props) {
                   >
                     <span className="mono-label-xs text-stone">0{i + 1}</span>
                     <span
-                      className={`font-display text-[13vw] leading-[0.95] tracking-tight transition-colors md:text-[7vw] ${
-                        active ? "italic text-stone" : "group-hover:text-stone"
+                      className={`font-display text-[13vw] leading-[0.95] transition-colors md:text-[7vw] ${
+                        active ? "display-emph text-stone" : "group-hover:text-stone"
                       }`}
                     >
                       {item.label}

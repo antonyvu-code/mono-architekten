@@ -30,14 +30,16 @@ export default function Reveal({
       const from =
         direction === "up" ? "inset(100% 0% 0% 0%)" : "inset(0% 100% 0% 0%)";
 
+      // Dauern innerhalb der `--dur-reveal`-Stufe (700–900ms) der Handwerksebene.
+      // Vorher 1,15s bzw. 1,4s — das war kein Vorhang mehr, sondern Warten.
       const tl = gsap.timeline({
-        defaults: { ease: "power2.out", duration: 1.15 },
+        defaults: { ease: "power2.out", duration: 0.9 },
         scrollTrigger: immediate
           ? undefined
           : { trigger: frame, start: "top 82%", once: true },
       });
       tl.fromTo(frame, { clipPath: from }, { clipPath: "inset(0% 0% 0% 0%)" });
-      if (img) tl.fromTo(img, { scale: 1.12 }, { scale: 1, duration: 1.4 }, 0);
+      if (img) tl.fromTo(img, { scale: 1.12 }, { scale: 1, duration: 0.9 }, 0);
     },
     { scope: frameRef }
   );

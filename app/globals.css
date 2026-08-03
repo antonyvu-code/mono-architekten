@@ -10,9 +10,83 @@
   --color-line: rgba(17, 17, 17, 0.14);
   --color-line-soft: rgba(17, 17, 17, 0.08);
 
-  --font-display: var(--font-instrument), ui-serif, Georgia, serif;
-  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-space-mono), ui-monospace, monospace;
+  --font-display: var(--font-marcellus), ui-serif, Georgia, serif;
+  --font-display-sc: var(--font-marcellus-sc), ui-serif, Georgia, serif;
+  --font-sans: var(--font-schibsted), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-dm-mono), ui-monospace, monospace;
+}
+
+/* ——— display is cut, not written ———
+   Marcellus follows Roman inscription, so it wants air between the letters, not the
+   negative tracking a Didone display face tolerates. It also ships no italic: emphasis
+   in display type uses the small-caps cut, never a synthesised slant. */
+/* `em` tracking resolves against the font-size of the element it is declared on and then
+   inherits as an absolute length. Where a component puts the size on a child — RevealText
+   does, on its [data-line] spans — the tracking has to be repeated there with
+   `tracking-[0.012em]`, or the child inherits a value computed against 16px and the cut
+   letters end up with no air at all. */
+.font-display {
+  letter-spacing: 0.012em;
+  font-synthesis-style: none;
+}
+
+.display-emph {
+  font-family: var(--font-display-sc);
+  font-style: normal;
+}
+
+/* ——— Tageslicht: die eine steuernde Variable ———
+   Gestaltete Standardwerte, kein Platzhalter: Vormittagslicht aus Südost. Die Seite ist
+   statisch vorgerendert und muss ohne JavaScript vollständig beleuchtet aussehen;
+   `Daylight.tsx` korrigiert danach auf den echten Berliner Sonnenstand. */
+:root {
+  --sun-el: 32;
+  --sun-az: 135;
+  --sun-compass: "SO";
+  --sun-day: 1;
+
+  --facade-shadow-x: -0.045em;
+  --facade-shadow-y: 0.045em;
+  --facade-shadow-blur: 0.1em;
+  --facade-shadow-alpha: 0.16;
+
+  --rake-deg: 225deg;
+  --rake-alpha: 0.05;
+}
+
+/* Die Fassade trägt den Schatten des aktuellen Sonnenstands.
+   Der Übergang steht anfangs auf 0s: die erste Korrektur vom gestalteten Vorgabewert auf den
+   echten Sonnenstand muss sofort sitzen, sonst kröche der Schatten nach dem Laden eineinhalb
+   Minuten lang an seinen Platz. Erst danach setzt `Daylight.tsx` die 90s — weit über der
+   `--dur-reveal`-Stufe, und das mit Absicht: das ist kein UI-Feedback, sondern Tageslicht.
+   Es darf nicht wahrnehmbar „animieren“, sondern zwischen zwei Minutenwerten unmerklich
+   weiterwandern. */
+.facade {
+  text-shadow: var(--facade-shadow-x) var(--facade-shadow-y) var(--facade-shadow-blur)
+    rgba(17, 17, 17, var(--facade-shadow-alpha));
+  transition: text-shadow var(--facade-transition, 0s) linear;
+}
+
+/* Streiflicht über den Hero, aus derselben Richtung wie der Schatten. */
+.rake::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    var(--rake-deg),
+    rgba(17, 17, 17, var(--rake-alpha)) 0%,
+    transparent 42%,
+    transparent 58%,
+    rgba(255, 255, 255, calc(var(--rake-alpha) * 2.4)) 100%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Standbild statt leerer Box: das Licht steht still, bleibt aber gestaltet. */
+  .facade {
+    transition: none;
+  }
 }
 
 html {
@@ -40,6 +114,23 @@ body {
 :focus-visible {
   outline: 2px solid var(--color-ink);
   outline-offset: 3px;
+}
+
+/* Vergrößert die Trefferfläche auf 44px, ohne die Optik anzufassen.
+   Die Beschriftungen sind bewusst zierlich — das ist die Gestaltung und bleibt. Was zu klein
+   war, ist die *Fläche*, nicht die Schrift, also wächst nur sie. Gilt für eigenständige
+   Bedienelemente; Links mitten im Fließtext sind laut WCAG 2.5.8 ausgenommen. */
+.hit {
+  position: relative;
+}
+.hit::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: max(100%, 44px);
+  height: max(100%, 44px);
 }
 
 /* ——— utility voice: every metadata is small uppercase mono ——— */

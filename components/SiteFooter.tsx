@@ -18,7 +18,7 @@ export default function SiteFooter({ locale, dict }: Props) {
     <footer className="hairline-t page-margin mt-28 pb-24 pt-14 md:mt-40 md:pb-16">
       <div className="grid-12 gap-y-12">
         <div className="col-span-12 md:col-span-6">
-          <p className="font-display text-[14vw] leading-[0.9] tracking-tight md:text-[6.5vw]">
+          <p className="font-display text-[14vw] leading-[0.9] md:text-[6.5vw]">
             MONO
           </p>
           <p className="mono-label mt-4 text-stone-deep">{footer.tagline}</p>

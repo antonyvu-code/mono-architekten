@@ -1,31 +1,40 @@
 import type { Metadata } from "next";
-import { Archivo, Instrument_Serif, Space_Mono } from "next/font/google";
+import { DM_Mono, Marcellus, Marcellus_SC, Schibsted_Grotesk } from "next/font/google";
 import "../globals.css";
 import { getDictionary, isLocale, locales, type Locale } from "@/lib/i18n";
 import SmoothScroll from "@/components/SmoothScroll";
 import TransitionProvider from "@/components/TransitionProvider";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import CornerTicks from "@/components/chrome/CornerTicks";
+import Schattenfuge from "@/components/chrome/Schattenfuge";
+import Daylight from "@/components/chrome/Daylight";
 import Telemetry from "@/components/chrome/Telemetry";
 import ProgressLine from "@/components/chrome/ProgressLine";
 import GridOverlay from "@/components/chrome/GridOverlay";
 
-const instrument = Instrument_Serif({
-  variable: "--font-instrument",
+/* VITRINE — the façade is cut, not written. Marcellus is a glyphic face after Roman
+   inscriptions; it has no italic on purpose, so emphasis in display type is carried by the
+   small-caps cut instead of a slant. Never let the browser synthesise one. */
+const marcellus = Marcellus({
+  variable: "--font-marcellus",
   weight: "400",
-  style: ["normal", "italic"],
   subsets: ["latin"],
 });
 
-const archivo = Archivo({
-  variable: "--font-archivo",
+const marcellusSc = Marcellus_SC({
+  variable: "--font-marcellus-sc",
+  weight: "400",
   subsets: ["latin"],
 });
 
-const spaceMono = Space_Mono({
-  variable: "--font-space-mono",
-  weight: ["400", "700"],
+const schibsted = Schibsted_Grotesk({
+  variable: "--font-schibsted",
+  subsets: ["latin"],
+});
+
+const dmMono = DM_Mono({
+  variable: "--font-dm-mono",
+  weight: ["400", "500"],
   subsets: ["latin"],
 });
 
@@ -99,7 +108,7 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${instrument.variable} ${archivo.variable} ${spaceMono.variable} antialiased`}
+      className={`${marcellus.variable} ${marcellusSc.variable} ${schibsted.variable} ${dmMono.variable} antialiased`}
     >
       <body>
         <script
@@ -115,8 +124,9 @@ export default async function LocaleLayout({
           <main id="content">{children}</main>
           <SiteFooter locale={locale} dict={dict} />
         </TransitionProvider>
+        <Daylight />
         <ProgressLine />
-        <CornerTicks />
+        <Schattenfuge />
         <Telemetry />
         <GridOverlay label={dict.footer.grid} hint={dict.footer.gridHint} />
       </body>

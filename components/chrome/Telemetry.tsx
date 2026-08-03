@@ -1,14 +1,23 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { sunPosition } from "@/lib/sun";
 
 /**
- * Lab Noir signature: live instrument readout, real values only —
- * Berlin clock, scroll offset, viewport size.
+ * VITRINE-Telemetrie — gemessene Werte, aber die des Themas.
+ *
+ * Vorher standen hier `Y 00000` (Scroll-Offset) und die Viewport-Größe. Beides ist wahr,
+ * aber es sind Tatsachen des *Browsers*, nicht der Architektur. Ein Ausstellungsraum misst
+ * Licht: Sonnenhöhe und Himmelsrichtung, berechnet aus der Berliner Uhr und den Koordinaten,
+ * die ohnehin in dieser Zeile stehen. Damit sind die Eingaben der Rechnung sichtbar neben
+ * ihrem Ergebnis.
+ *
+ * `aria-hidden`, weil sich die Werte im Sekundentakt ändern — vorgelesen wären sie Lärm.
+ * Die inhaltlich wichtige Fassung steht als `SunReadout` im Hero, dort ohne `aria-hidden`.
  */
 export default function Telemetry() {
   const clockRef = useRef<HTMLSpanElement>(null);
-  const scrollRef = useRef<HTMLSpanElement>(null);
+  const sunRef = useRef<HTMLSpanElement>(null);
   const vpRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
@@ -19,35 +28,27 @@ export default function Telemetry() {
       second: "2-digit",
     });
 
-    const tickClock = () => {
-      if (clockRef.current) clockRef.current.textContent = `BER ${fmt.format(new Date())}`;
-    };
-    tickClock();
-    const clockId = setInterval(tickClock, 1000);
-
-    let raf = 0;
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        if (scrollRef.current) {
-          scrollRef.current.textContent = `Y ${String(Math.round(window.scrollY)).padStart(5, "0")}`;
-        }
-      });
-    };
-    const onResize = () => {
-      if (vpRef.current) {
-        vpRef.current.textContent = `VP ${window.innerWidth}×${window.innerHeight}`;
+    const tick = () => {
+      const now = new Date();
+      if (clockRef.current) clockRef.current.textContent = `BER ${fmt.format(now)}`;
+      if (sunRef.current) {
+        const sun = sunPosition(now);
+        sunRef.current.textContent = sun.isDay
+          ? `SONNE ${sun.elevation.toFixed(1)}° ${sun.compass}`
+          : `SONNE ${sun.elevation.toFixed(1)}° — UNTER HORIZONT`;
       }
     };
-    onScroll();
+    tick();
+    const id = setInterval(tick, 1000);
+
+    const onResize = () => {
+      if (vpRef.current) vpRef.current.textContent = `VP ${window.innerWidth}×${window.innerHeight}`;
+    };
     onResize();
-    window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
 
     return () => {
-      clearInterval(clockId);
-      cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", onScroll);
+      clearInterval(id);
       window.removeEventListener("resize", onResize);
     };
   }, []);
@@ -55,10 +56,10 @@ export default function Telemetry() {
   return (
     <div
       aria-hidden="true"
-      className="mono-label-xs pointer-events-none fixed bottom-4 left-5 z-40 hidden gap-5 text-stone-deep md:flex"
+      className="mono-label-xs pointer-events-none fixed bottom-6 left-6 z-40 hidden gap-5 text-stone-deep md:flex"
     >
       <span ref={clockRef} />
-      <span ref={scrollRef} />
+      <span ref={sunRef} />
       <span ref={vpRef} />
       <span>52.529°N 13.401°E</span>
     </div>

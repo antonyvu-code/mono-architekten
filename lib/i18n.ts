@@ -62,6 +62,9 @@ const de = {
     filterLabel: "Nach Typologie filtern",
     empty: "Keine Projekte in dieser Kategorie.",
     count: "Projekte",
+    /** Ansage für Screenreader, wenn der Filter die Liste ändert. {n} = Anzahl. */
+    resultCount: "{n} Projekte werden angezeigt.",
+    resultCountOne: "Ein Projekt wird angezeigt.",
   },
   categories: {
     residential: "Wohnen",
@@ -194,6 +197,8 @@ const en: typeof de = {
     filterLabel: "Filter by typology",
     empty: "No projects in this category.",
     count: "Projects",
+    resultCount: "{n} projects shown.",
+    resultCountOne: "One project shown.",
   },
   categories: {
     residential: "Residential",

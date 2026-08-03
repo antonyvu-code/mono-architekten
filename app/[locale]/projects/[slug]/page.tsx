@@ -77,7 +77,7 @@ export default async function ProjectDetailPage({
           immediate
           as="h1"
           lines={[project.name]}
-          className="font-display text-[13vw] leading-[0.9] tracking-tight md:text-[8vw]"
+          className="font-display text-[13vw] leading-[0.9] md:text-[8vw]"
         />
       </header>
 
@@ -93,7 +93,7 @@ export default async function ProjectDetailPage({
         </dl>
 
         <div className="col-span-12 md:col-span-8 md:col-start-5">
-          <p className="font-display mb-10 text-2xl leading-snug tracking-tight md:text-3xl">
+          <p className="font-display mb-10 text-2xl leading-snug md:text-3xl">
             {project.summary[locale]}
           </p>
           <div className="text-[0.9375rem] leading-relaxed text-ink/85 md:columns-2 md:gap-10">
@@ -144,7 +144,7 @@ export default async function ProjectDetailPage({
             transitionLabel={next.name.toUpperCase()}
             className="group flex flex-wrap items-baseline justify-between gap-4"
           >
-            <span className="font-display text-5xl tracking-tight transition-colors group-hover:text-stone md:text-8xl">
+            <span className="font-display text-5xl transition-colors group-hover:text-stone md:text-8xl">
               {next.name}
             </span>
             <span className="mono-label text-stone-deep">

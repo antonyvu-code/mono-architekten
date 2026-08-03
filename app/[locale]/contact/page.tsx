@@ -25,7 +25,7 @@ export default async function ContactPage({
   return (
     <div className="page-margin pt-36 md:pt-44">
       <p className="mono-label mb-5 text-stone-deep">{t.eyebrow}</p>
-      <h1 className="font-display mb-10 text-[16vw] leading-[0.85] tracking-tight md:text-[9vw]">
+      <h1 className="font-display mb-10 text-[16vw] leading-[0.85] md:text-[9vw]">
         {t.title}
       </h1>
 
